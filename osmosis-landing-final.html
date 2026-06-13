@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Osmosis — The CRM where your team learns by working together</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F8F9FA;
+    --bg2: #FFFFFF;
+    --bg3: #EEF1F5;
+    --navy: #032D60;
+    --teal: #00C2A0;
+    --blue: #0176D3;
+    --teal-dim: rgba(0,194,160,0.10);
+    --teal-glow: rgba(0,194,160,0.20);
+    --white: #FFFFFF;
+    --ink: #032D60;
+    --slate: #4A5E78;
+    --slate-light: #7A8FA8;
+    --border: rgba(3,45,96,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(248,249,250,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 30px; height: 30px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark svg { width: 100%; height: 100%; }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--slate);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: #fff !important;
+    font-weight: 600 !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    transition: opacity 0.2s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: #fff !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(0,194,160,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--teal-dim);
+    border: 1px solid rgba(0,194,160,0.35);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--teal);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-headline {
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -3px;
+    text-align: center;
+    max-width: 900px;
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .hero-headline .accent { color: var(--teal); }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--slate);
+    text-align: center;
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 80px;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--slate);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--navy); }
+
+  .btn-ghost svg { transition: transform 0.2s; }
+  .btn-ghost:hover svg { transform: translateX(3px); }
+
+  /* SCREENSHOT FRAME */
+  .hero-screen {
+    position: relative;
+    width: 100%;
+    max-width: 1080px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 0 0 1px rgba(3,45,96,0.06),
+      0 40px 120px rgba(3,45,96,0.12),
+      0 0 80px rgba(0,194,160,0.06);
+    transform: perspective(1200px) rotateX(3deg);
+    transition: transform 0.6s ease;
+  }
+
+  .hero-screen:hover { transform: perspective(1200px) rotateX(0deg); }
+
+  .screen-bar {
+    background: #E8ECF2;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(3,45,96,0.1);
+  }
+
+  .screen-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .screen-dot.r { background: #FF5F57; }
+  .screen-dot.y { background: #FFBD2E; }
+  .screen-dot.g { background: #28CA41; }
+
+  .screen-url {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: var(--slate);
+    font-family: 'Inter', monospace;
+  }
+
+  .screen-img {
+    width: 100%;
+    display: block;
+    background: #F0F3F8;
+  }
+
+  /* CRM MOCKUP */
+  .crm-mockup {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #F0F3F8;
+    display: grid;
+    grid-template-columns: 200px 1fr 280px;
+    gap: 0;
+    font-size: 12px;
+  }
+
+  .crm-sidebar {
+    background: #032D60;
+    border-right: 1px solid rgba(3,45,96,0.15);
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .crm-logo-area {
+    padding: 8px 8px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+  }
+
+  .crm-logo-sq {
+    width: 24px; height: 24px;
+    background: var(--teal);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .crm-nav-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .crm-nav-item.active {
+    background: rgba(0,194,160,0.2);
+    color: #00C2A0;
+  }
+
+  .crm-nav-icon {
+    width: 14px; height: 14px;
+    opacity: 0.7;
+  }
+
+  .crm-main {
+    padding: 16px 20px;
+    overflow: hidden;
+  }
+
+  .crm-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .crm-title { font-weight: 700; font-size: 16px; color: var(--navy); }
+  .crm-sub { font-size: 11px; color: var(--slate-light); margin-top: 1px; }
+  .crm-col-header {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--slate-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .panel-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--slate-light);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+
+  .crm-search {
+    background: #fff;
+    border: 1px solid rgba(3,45,96,0.12);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #7A8FA8;
+    font-size: 11px;
+    width: 180px;
+  }
+
+  .crm-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .col-count {
+    background: rgba(3,45,96,0.08);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 10px;
+    color: var(--slate);
+  }
+
+  .crm-card {
+    background: #fff;
+    border: 1px solid rgba(3,45,96,0.09);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    cursor: default;
+  }
+
+  .crm-card:hover { border-color: rgba(0,194,160,0.4); }
+
+  .card-company { font-size: 9px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .card-deal { font-size: 11px; font-weight: 600; color: var(--navy); }
+  .card-value { font-size: 10px; color: var(--slate-light); margin-top: 4px; }
+  .card-badge {
+    display: inline-block;
+    background: rgba(0,184,169,0.15);
+    color: var(--teal);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 100px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .card-badge.warn { background: rgba(255,180,0,0.12); color: #FFB400; }
+
+  .crm-right {
+    border-left: 1px solid rgba(3,45,96,0.08);
+    padding: 16px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mini-chart {
+    height: 60px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .bar {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    background: rgba(0,194,160,0.2);
+    transition: background 0.3s;
+  }
+
+  .bar.hi { background: var(--teal); }
+
+  .activity-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(3,45,96,0.06);
+  }
+
+  .activity-icon {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    background: var(--teal-dim);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal);
+    font-size: 9px;
+  }
+
+  .activity-text { font-size: 10px; color: var(--slate); line-height: 1.4; }
+  .activity-text strong { color: var(--navy); font-weight: 600; }
+  .activity-time { font-size: 9px; color: var(--slate-light); margin-top: 2px; }
+
+  .ai-nudge {
+    background: #EEF6FF;
+    border: 1px solid rgba(1,118,211,0.2);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 10px;
+    color: var(--slate);
+    line-height: 1.5;
+  }
+
+  .ai-nudge-label {
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .ai-nudge-btn {
+    margin-top: 8px;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+    font-size: 9px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 120px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .full-section {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+  }
+
+  .section-headline {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.08;
+    max-width: 700px;
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    font-size: 18px;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* OPEN FLOOR SECTION */
+  .floor-section {
+    background: #FFFFFF;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .floor-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* CHAT DEMO */
+  .chat-demo {
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(3,45,96,0.10);
+  }
+
+  .chat-header {
+    background: #F0F3F8;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .channel-tag {
+    background: rgba(0,184,169,0.15);
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  .chat-meta { font-size: 11px; color: var(--slate-light); }
+
+  .chat-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+
+  .msg { display: flex; flex-direction: column; gap: 4px; }
+
+  .msg-sender {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .msg-sender .role { color: var(--teal); font-weight: 500; font-size: 10px; }
+
+  .msg-bubble {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.55;
+    padding-left: 16px;
+    border-left: 2px solid rgba(3,45,96,0.12);
+  }
+
+  .msg-bubble.agent {
+    border-left-color: var(--teal);
+    color: var(--slate);
+    background: rgba(0,194,160,0.06);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+  }
+
+  .msg-bubble .hl { color: var(--navy); font-weight: 500; }
+
+  .msg-bubble .check { color: var(--teal); }
+
+  .msg-time { font-size: 10px; color: var(--slate-light); }
+
+  .chat-input {
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .chat-input-field {
+    flex: 1;
+    background: #F0F3F8;
+    border: 1px solid rgba(3,45,96,0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--slate-light);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .chat-send {
+    width: 32px; height: 32px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* HOW IT WORKS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(3,45,96,0.08);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 64px;
+  }
+
+  .step {
+    background: #fff;
+    padding: 40px 36px;
+    position: relative;
+  }
+
+  .step-num {
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(3,45,96,0.05);
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: -3px;
+  }
+
+  .step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .step-body {
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.65;
+  }
+
+  .step-icon {
+    width: 40px; height: 40px;
+    background: rgba(0,194,160,0.1);
+    border: 1px solid rgba(0,194,160,0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--teal);
+    font-size: 18px;
+  }
+
+  /* ROLES */
+  .roles-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 56px;
+  }
+
+  .role-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: default;
+  }
+
+  .role-card:hover {
+    border-color: rgba(0,184,169,0.35);
+    transform: translateY(-3px);
+  }
+
+  .role-icon {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .role-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .role-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .role-items li {
+    font-size: 13px;
+    color: var(--slate);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .role-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+
+  /* TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 48px;
+    font-size: 14px;
+  }
+
+  .compare-table th {
+    text-align: left;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--slate);
+  }
+
+  .compare-table th:last-child { color: var(--teal); }
+
+  .compare-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(3,45,96,0.05);
+    color: var(--slate);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .compare-table td:last-child { color: var(--slate); }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .td-bad { color: #C0392B !important; }
+  .td-good { color: var(--navy) !important; font-weight: 500; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 140px 48px;
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(0,194,160,0.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-headline {
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1.05;
+    max-width: 800px;
+    margin: 0 auto 24px;
+    position: relative;
+    color: #fff;
+  }
+
+  .cta-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .cta-actions { display: flex; gap: 16px; justify-content: center; position: relative; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-copy { font-size: 13px; color: var(--slate-light); }
+
+  .footer-tag {
+    font-size: 12px;
+    color: var(--teal);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* FADE IN */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* AGENT PILLS */
+  .agents-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 40px;
+  }
+
+  .agent-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .agent-pill:hover { border-color: rgba(0,194,160,0.5); color: var(--navy); }
+
+  .agent-pill-icon { font-size: 16px; display:flex;align-items:center; }
+  .agent-pill-icon i { font-size:18px; color: var(--teal); }
+  .step-icon i { font-size:20px; }
+  .role-icon i { font-size:26px; color: var(--teal); }
+  .activity-icon i { font-size:13px; color: var(--teal); }
+  .ai-nudge-label i { font-size:13px; vertical-align:middle; margin-right:2px; }
+  .msg-sender-icon i { font-size:14px; color: var(--teal); vertical-align:middle; }
+  .check-icon i { color: var(--teal); font-size:13px; vertical-align:middle; margin-right:2px; }
+  .agent-pill-sub { font-size: 11px; color: var(--slate); display: block; font-weight: 400; }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--slate);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: float 2.5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  .scroll-arrow {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--navy), transparent);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 80px 24px; }
+    .floor-inner { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .roles-row { grid-template-columns: 1fr 1fr; }
+    .hero-headline { letter-spacing: -1.5px; }
+    .crm-mockup { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .cta-section { padding: 80px 24px; }
+  }
+  /* CTA section button — white on navy, inverts in dark */
+  .btn-cta-main {
+    background: #fff;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-cta-main:hover { opacity: 0.9; transform: translateY(-1px); }
+  body.dark .btn-cta-main { background: var(--teal); color: #000; }
+  .theme-toggle {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--slate);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: var(--bg3); color: var(--ink); }
+
+  /* DARK MODE */
+  body.dark {
+    --bg: #07090E;
+    --bg2: #0D1117;
+    --bg3: #111820;
+    --teal: #00B8A9;
+    --teal-dim: rgba(0,184,169,0.12);
+    --blue: #0176D3;
+    --white: #FFFFFF;
+    --ink: #FFFFFF;
+    --navy: #FFFFFF;
+    --slate: #8A9BB0;
+    --slate-light: #C4CFD9;
+    --border: rgba(255,255,255,0.07);
+  }
+  body.dark .crm-sidebar { background: #0A0F1A; }
+  body.dark .crm-logo-area { color: var(--teal); }
+  body.dark .crm-logo-sq { color: #000; }
+  body.dark .crm-nav-item { color: #6B7A8D; }
+  body.dark .crm-nav-item.active { background: rgba(0,184,169,0.12); color: var(--teal); }
+  body.dark .crm-mockup { background: #0D1117; }
+  body.dark .crm-main { background: #0D1117; }
+  body.dark .crm-search { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+  body.dark .crm-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
+  body.dark .card-deal { color: #fff; }
+  body.dark .col-count { background: rgba(255,255,255,0.08); }
+  body.dark .crm-right { background: #09101A; border-left-color: rgba(255,255,255,0.06); }
+  body.dark .crm-topbar { color: #fff; }
+  body.dark .screen-bar { background: #1A1F2E; }
+  body.dark .chat-demo { background: #0A0F1A; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+  body.dark .chat-header { background: #0D1420; }
+  body.dark .chat-input-field { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  body.dark .chat-send { background: var(--teal); }
+  body.dark .msg-bubble { border-left-color: rgba(255,255,255,0.08); }
+  body.dark .msg-bubble.agent { background: rgba(0,184,169,0.04); }
+  body.dark .msg-bubble .hl { color: #fff; }
+  body.dark .step { background: #0D1117; }
+  body.dark .step-num { color: rgba(255,255,255,0.04); }
+  body.dark .steps-grid { background: rgba(255,255,255,0.07); }
+  body.dark .role-card { background: #0D1117; }
+  body.dark .agent-pill { background: #0D1117; color: #C4CFD9; }
+  body.dark .compare-table td { border-bottom-color: rgba(255,255,255,0.04); }
+  body.dark .floor-section { background: #0D1117; }
+  body.dark .cta-section { background: #07090E; }
+  body.dark .ai-nudge { background: linear-gradient(135deg, #0A1A2A, #0D1F2D); border-color: rgba(0,184,169,0.2); }
+  body.dark .ai-nudge-btn { background: var(--teal); color: #000; }
+  body.dark .td-bad { color: #FF6B6B !important; }
+  body.dark .td-good { color: var(--teal) !important; font-weight: 400; }
+  body.dark .btn-primary { background: var(--teal); color: #000; }
+  body.dark .nav-cta { background: var(--teal); color: #000 !important; }
+  body.dark .nav-logo { color: #fff; }
+  body.dark .hero-screen { box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 120px rgba(0,0,0,0.8); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="15" r="9" stroke="#032D60" stroke-width="2" opacity="0.4"/>
+        <circle cx="20" cy="15" r="9" stroke="#032D60" stroke-width="2"/>
+        <clipPath id="navlc"><circle cx="10" cy="15" r="9"/></clipPath>
+        <circle cx="20" cy="15" r="9" fill="#00C2A0" fill-opacity="0.15" clip-path="url(#navlc)"/>
+      </svg>
+    </div>
+    Osmosis
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#roles">By role</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#cta" class="nav-cta">Request a demo</a></li>
+    <li>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-left:48px;padding-right:48px;max-width:100%;">
+  <div class="hero-glow"></div>
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+
+  <div class="hero-eyebrow">
+    <span class="eyebrow-dot"></span>
+    Built for HMD Secure Sales Hackathon 2026
+  </div>
+
+  <h1 class="hero-headline">
+    The CRM where your team<br><span class="accent">learns by doing</span>
+  </h1>
+
+  <p class="hero-sub">
+    Osmosis brings your whole team onto one open floor — deals, cases, and forecasts grow from natural conversation, not forms.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Request a demo →</a>
+    <a href="#how" class="btn-ghost">
+      See how it works
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- INLINE CRM MOCKUP -->
+  <div class="hero-screen fade-in">
+    <div class="screen-bar">
+      <div class="screen-dot r"></div>
+      <div class="screen-dot y"></div>
+      <div class="screen-dot g"></div>
+      <div class="screen-url">app.osmosis.io</div>
+    </div>
+    <div class="crm-mockup">
+      <!-- Sidebar -->
+      <div class="crm-sidebar">
+        <div class="crm-logo-area">
+          <div class="crm-logo-sq">O</div>
+          Osmosis
+        </div>
+        <div class="crm-nav-item active">
+          <svg class="crm-nav-icon" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="#00C2A0" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="#00C2A0" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="#00C2A0" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="#00C2A0" stroke-width="1.2"/></svg>
+          Pipeline
+        </div>
+        <div class="crm-nav-item">
+          <svg class="crm-nav-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/><path d="M2 12c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/></svg>
+          Accounts
+        </div>
+        <div class="crm-nav-item">
+          <svg class="crm-nav-icon" viewBox="0 0 14 14" fill="none"><path d="M2 2h10v10H2z" rx="1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/><path d="M5 7h4M5 5h4M5 9h2" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/></svg>
+          #deals
+        </div>
+        <div class="crm-nav-item">
+          <svg class="crm-nav-icon" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4l-3 2.5 1 4L7 9l-3.5 2.5 1-4L1 5h4z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/></svg>
+          Forecast
+        </div>
+        <div style="flex:1"></div>
+        <div class="crm-nav-item" style="cursor:pointer;background:rgba(0,194,160,0.15);border:1px solid rgba(0,194,160,0.3);">
+          <svg class="crm-nav-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#00C2A0" stroke-width="1.2"/><path d="M7 5v4M5 7h4" stroke="#00C2A0" stroke-width="1.2"/></svg>
+          <span style="color:#00C2A0;font-size:11px;">New message</span>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <div class="crm-main">
+        <div class="crm-topbar">
+          <div>
+            <div class="crm-title">Pipeline — Q3 2026</div>
+            <div class="crm-sub">12 active deals · €4.2M pipeline</div>
+          </div>
+          <div class="crm-search">Search deals...</div>
+        </div>
+        <div class="crm-cols">
+          <div>
+            <div class="crm-col-header">Lead <span class="col-count">4</span></div>
+            <div class="crm-card">
+              <div class="card-company">Nordic Health</div>
+              <div class="card-deal">XR21 Pilot</div>
+              <div class="card-value">€320k · 2 days ago</div>
+              <span class="card-badge">New</span>
+            </div>
+            <div class="crm-card">
+              <div class="card-company">Metsä Group</div>
+              <div class="card-deal">Secure MDM Enterprise</div>
+              <div class="card-value">€180k · Yesterday</div>
+              <span class="card-badge warn">Stalled</span>
+            </div>
+          </div>
+          <div>
+            <div class="crm-col-header">Customer Test <span class="col-count">3</span></div>
+            <div class="crm-card" style="border-color:rgba(0,194,160,0.4);">
+              <div class="card-company">Acme Corp</div>
+              <div class="card-deal">50-device pilot</div>
+              <div class="card-value">€890k · Today 14:32</div>
+              <span class="card-badge"><i class="ph ph-check" style="font-size:9px;vertical-align:middle;"></i> Just updated</span>
+            </div>
+            <div class="crm-card">
+              <div class="card-company">Valio</div>
+              <div class="card-deal">MDM 3yr + Support</div>
+              <div class="card-value">€440k · 3 days ago</div>
+            </div>
+          </div>
+          <div>
+            <div class="crm-col-header">Contract Negotiation <span class="col-count">2</span></div>
+            <div class="crm-card">
+              <div class="card-company">Finnair</div>
+              <div class="card-deal">Fleet Management Suite</div>
+              <div class="card-value">€1.2M · 1 day ago</div>
+              <span class="card-badge">Pending approval</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right panel -->
+      <div class="crm-right">
+        <div>
+          <div class="panel-label">Pipeline health</div>
+          <div class="mini-chart">
+            <div class="bar" style="height:40%"></div>
+            <div class="bar" style="height:55%"></div>
+            <div class="bar" style="height:35%"></div>
+            <div class="bar" style="height:70%"></div>
+            <div class="bar hi" style="height:90%"></div>
+            <div class="bar" style="height:65%"></div>
+            <div class="bar" style="height:80%"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-label">Recent activity</div>
+          <div class="activity-item">
+            <div class="activity-icon"><i class="ph ph-chat-circle-text"></i></div>
+            <div>
+              <div class="activity-text"><strong>Maria</strong> moved Acme → Stage 4</div>
+              <div class="activity-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon"><i class="ph ph-clipboard-text"></i></div>
+            <div>
+              <div class="activity-text"><strong>Agent</strong> set a reminder for Jul 13</div>
+              <div class="activity-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon"><i class="ph ph-eye"></i></div>
+            <div>
+              <div class="activity-text"><strong>Jonas</strong> asked: what broke the stall?</div>
+              <div class="activity-time">3 min ago</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-nudge">
+          <div class="ai-nudge-label"><i class="ph ph-lightning"></i> AI Recommendation</div>
+          Finnair has gone quiet for 8 days. Signing in Q3 means now or never.
+          <br><span class="ai-nudge-btn">Draft offer →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- OPEN FLOOR -->
+<div class="floor-section full-section" id="how">
+  <div class="floor-inner">
+    <div class="fade-in">
+      <div class="section-label">The Open Floor</div>
+      <h2 class="section-headline">The whole team sees everything, always</h2>
+      <p class="section-body">
+        In a traditional CRM, data goes into forms — and nobody fills them in. On Osmosis's open floor, a rep writes one message and the whole team learns: which deal moved, why, and what comes next.
+      </p>
+      <div style="margin-top:28px;font-size:14px;color:var(--teal);font-style:italic;line-height:1.7;border-left:2px solid rgba(0,194,160,0.5);padding-left:16px;">
+        "Learning happens when you're near the work — not from reading manuals."<br>
+        <span style="color:var(--slate);font-style:normal;">— The Lehrwerkstatt principle, as inspired by Tobi Lütke</span>
+      </div>
+    </div>
+
+    <div class="chat-demo fade-in" style="transition-delay:0.15s">
+      <div class="chat-header">
+        <span class="channel-tag">#deals</span>
+        <span class="chat-meta">12 team members can see this</span>
+      </div>
+      <div class="chat-body">
+        <div class="msg">
+          <div class="msg-sender">Maria <span class="role">Sales Rep</span></div>
+          <div class="msg-bubble">Acme Corp received their 50 test devices today. <span class="hl">Pilot is live.</span></div>
+          <div class="msg-time">14:32</div>
+        </div>
+        <div class="msg">
+          <div class="msg-sender" style="color:var(--teal);"><i class="ph ph-robot" style="font-size:13px;vertical-align:middle;margin-right:4px;"></i> Osmosis Agent</div>
+          <div class="msg-bubble agent">
+            <i class="ph ph-check" style="color:var(--teal);font-size:13px;vertical-align:middle;margin-right:2px;"></i> Acme Corp → <span class="hl">Stage 4 (Customer Test)</span>. Pilot start: Jun 13.<br>            Suggested close: ~Aug. Set a 30-day check-in reminder?
+          </div>
+          <div class="msg-time">14:32</div>
+        </div>
+        <div class="msg">
+          <div class="msg-sender">Maria <span class="role">Sales Rep</span></div>
+          <div class="msg-bubble">Yes. CC the TAM Kim too.</div>
+          <div class="msg-time">14:33</div>
+        </div>
+        <div class="msg">
+          <div class="msg-sender" style="color:var(--teal);"><i class="ph ph-robot" style="font-size:13px;vertical-align:middle;margin-right:4px;"></i> Osmosis Agent</div>
+          <div class="msg-bubble agent">
+            <i class="ph ph-check" style="color:var(--teal);font-size:13px;vertical-align:middle;margin-right:2px;"></i> Reminder set Jul 13. <span class="hl">@kim</span> added.
+          </div>
+          <div class="msg-time">14:33</div>
+        </div>
+        <div class="msg">
+          <div class="msg-sender">Jonas <span class="role">New rep — 3 months in</span></div>
+          <div class="msg-bubble">Nice! Acme was stuck for a while — what finally moved them?</div>
+          <div class="msg-time">14:35</div>
+        </div>
+        <div class="msg">
+          <div class="msg-sender">Maria <span class="role">Sales Rep</span></div>
+          <div class="msg-bubble">Reference call with Nordic Health did it.</div>
+          <div class="msg-time">14:36</div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <div class="chat-input-field">Type a deal update...</div>
+        <div class="chat-send">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS - STEPS -->
+<section>
+  <div class="fade-in">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-headline">Three layers, one source of truth</h2>
+    <p class="section-body">Each layer serves its own purpose — but data flows through all of them automatically.</p>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step fade-in">
+      <div class="step-num">01</div>
+      <div class="step-icon"><i class="ph ph-chats"></i></div>
+      <div class="step-title">The Open Floor</div>
+      <div class="step-body">Shared team channels where everything happens. A rep writes one sentence — the deal updates, the team learns, the history is saved.</div>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <div class="step-icon"><i class="ph ph-cpu"></i></div>
+      <div class="step-title">AI Agents</div>
+      <div class="step-body">Six specialised agents translate natural language into structured data. Deal Updater, Case Manager, Offer Drafter, Forecast Narrator, and more.</div>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <div class="step-icon"><i class="ph ph-layout"></i></div>
+      <div class="step-title">Role-based dashboards</div>
+      <div class="step-body">The sales manager sees stalled deals at a glance. Finance sees the time-phased forecast. All auto-populated as the team works.</div>
+    </div>
+  </div>
+
+  <div class="agents-flow fade-in" style="margin-top:32px;">
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-arrows-clockwise"></i></span><span>Deal Updater<span class="agent-pill-sub">Updates stages from conversation</span></span></div>
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-ticket"></i></span><span>Case Manager<span class="agent-pill-sub">Creates cases and starts the SLA timer</span></span></div>
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-file-text"></i></span><span>Offer Drafter<span class="agent-pill-sub">Builds offers from the product catalog</span></span></div>
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-trend-up"></i></span><span>Forecast Narrator<span class="agent-pill-sub">Explains pipeline health in plain language</span></span></div>
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-compass"></i></span><span>Next-Best-Action<span class="agent-pill-sub">Suggests the next step per account</span></span></div>
+    <div class="agent-pill"><span class="agent-pill-icon"><i class="ph ph-microphone"></i></span><span>Meeting Scribe<span class="agent-pill-sub">Extracts action items from meeting notes</span></span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROLES -->
+<section id="roles">
+  <div class="fade-in">
+    <div class="section-label">Role-based views</div>
+    <h2 class="section-headline">Every role finds<br>their view instantly</h2>
+    <p class="section-body">No training plans. Log in — you see exactly what you need.</p>
+  </div>
+
+  <div class="roles-row">
+    <div class="role-card fade-in">
+      <div class="role-icon"><i class="ph ph-user-circle"></i></div>
+      <div class="role-title">Sales Rep</div>
+      <ul class="role-items">
+        <li>Your deals by stage</li>
+        <li>Open accounts and history</li>
+        <li>AI-suggested next best action</li>
+        <li>Draft offers directly in chat</li>
+      </ul>
+    </div>
+    <div class="role-card fade-in" style="transition-delay:0.08s">
+      <div class="role-icon"><i class="ph ph-headset"></i></div>
+      <div class="role-title">TAM / Customer Success</div>
+      <ul class="role-items">
+        <li>Cases by priority and age</li>
+        <li>SLA timer starts automatically</li>
+        <li>Resolutions searchable in channels</li>
+        <li>Full account history at a glance</li>
+      </ul>
+    </div>
+    <div class="role-card fade-in" style="transition-delay:0.16s">
+      <div class="role-icon"><i class="ph ph-chart-bar"></i></div>
+      <div class="role-title">Sales Manager</div>
+      <ul class="role-items">
+        <li>Team pipeline in one view</li>
+        <li>Stalled deals (14+ days) highlighted</li>
+        <li>Forecast vs. target in real time</li>
+        <li>Approve discounts in one click</li>
+      </ul>
+    </div>
+    <div class="role-card fade-in" style="transition-delay:0.24s">
+      <div class="role-icon"><i class="ph ph-currency-circle-dollar"></i></div>
+      <div class="role-title">Finance</div>
+      <ul class="role-items">
+        <li>Weighted pipeline by quarter</li>
+        <li>3-year time-phased forecast</li>
+        <li>Offer approvals via email</li>
+        <li>AI narrative on pipeline health instantly</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div class="fade-in">
+    <div class="section-label">Compare</div>
+    <h2 class="section-headline">Traditional CRM vs. Osmosis</h2>
+    <p class="section-body">CRMs fail for one consistent reason: people don't fill them in. Osmosis solves this structurally.</p>
+  </div>
+
+  <table class="compare-table fade-in">
+    <thead>
+      <tr>
+        <th>The situation today</th>
+        <th>With Osmosis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-bad">Deals tracked in Excel, knowledge scattered</td>
+        <td class="td-good">One place for every account, deal, case, and timeline</td>
+      </tr>
+      <tr>
+        <td class="td-bad">Pipeline knowledge lives in personal inboxes</td>
+        <td class="td-good">Every interaction visible and searchable by the whole team</td>
+      </tr>
+      <tr>
+        <td class="td-bad">New hires learn by asking colleagues</td>
+        <td class="td-good">New reps scroll back through real deal history from day one</td>
+      </tr>
+      <tr>
+        <td class="td-bad">Managers interrupt reps to get verbal updates</td>
+        <td class="td-good">Dashboards auto-populate as the team works</td>
+      </tr>
+      <tr>
+        <td class="td-bad">Forecasting is a manual spreadsheet exercise</td>
+        <td class="td-good">Live weighted forecast, always current</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CTA -->
+<section class="cta-section full-section" id="cta" style="max-width:100%;padding-left:48px;padding-right:48px;">
+  <div class="cta-bg"></div>
+  <div class="fade-in">
+    <div class="section-label" style="text-align:center;margin-bottom:20px;color:rgba(255,255,255,0.5);">Get started</div>
+    <h2 class="cta-headline">
+      The floor is the classroom.<br><span style="color:var(--teal);">Open the door.</span>
+    </h2>
+    <p class="cta-sub">HMD Secure is one year old, 10–20 reps, no existing CRM. This is the perfect moment.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-cta-main" style="font-size:16px;padding:16px 40px;">Request a live demo</a>
+      <a href="#how" class="btn-ghost" style="font-size:15px;color:rgba(255,255,255,0.7);">Learn more →</a>
+    </div>
+  </div>
+</section>
+
+<div style="max-width:1200px;margin:0 auto;"><div class="divider"></div></div>
+
+<footer>
+  <div class="footer-copy">© 2026 Osmosis. Built at HMD Secure Sales Hackathon.</div>
+  <div class="footer-tag">The floor is the classroom.</div>
+</footer>
+
+<script>
+  // Canvas connection lines
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let nodes = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function initNodes() {
+    nodes = [];
+    for (let i = 0; i < 30; i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+      });
+    }
+  }
+
+  let canvasDark = false;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 160) {
+          const a = (1 - dist/160) * (canvasDark ? 0.12 : 0.08);
+          ctx.beginPath();
+          ctx.strokeStyle = canvasDark ? `rgba(0,184,169,${a})` : `rgba(3,45,96,${a})`;
+          ctx.lineWidth = 1;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 1.5, 0, Math.PI*2);
+      ctx.fillStyle = canvasDark ? 'rgba(0,184,169,0.25)' : 'rgba(3,45,96,0.15)';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initNodes();
+  draw();
+  window.addEventListener('resize', () => { resize(); initNodes(); });
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Hero screen immediate show
+  const heroScreen = document.querySelector('.hero-screen');
+  setTimeout(() => heroScreen.classList.add('visible'), 300);
+
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  const sunPath = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  let dark = false;
+  toggle.addEventListener('click', () => {
+    dark = !dark;
+    document.body.classList.toggle('dark', dark);
+    themeIcon.innerHTML = dark ? sunPath : moonPath;
+    canvasDark = dark;
+  });
+</script>
+</body>
+</html>
